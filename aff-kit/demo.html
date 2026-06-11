@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>aff-kit デモ（kondate-gacha 想定）</title>
+<style>
+  body{font-family:system-ui,-apple-system,sans-serif;background:#faf7f2;margin:0;padding:24px;color:#333}
+  .demo-result{max-width:520px;margin:0 auto;background:#fff;border-radius:16px;padding:20px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .demo-result h1{font-size:20px;margin:0 0 6px}
+  .demo-dish{font-size:28px;font-weight:800;color:#e8743b;margin:8px 0}
+  #result{max-width:520px;margin:0 auto}
+  .clicks{max-width:520px;margin:16px auto;font-size:12px;color:#888;text-align:center}
+</style>
+</head>
+<body>
+
+  <!-- ↓ これは「献立ガチャの結果画面」のダミー。実際は kondate-gacha 側の結果表示にあたる部分。 -->
+  <div class="demo-result">
+    <h1>🍳 今日の献立ガチャ</h1>
+    <div class="demo-dish">鶏のさっぱり煮 定食</div>
+    <p>主菜・副菜・汁物の3点セットが当たりました！</p>
+  </div>
+
+  <!-- ↓ ここに広告導線が差し込まれる -->
+  <div id="result"></div>
+
+  <p class="clicks" id="clicks"></p>
+
+  <script src="asp-widget.js"></script>
+  <script>
+    // 実運用では url を自分のアフィリリンクに差し替えるだけ。
+    AffKit.render({
+      mount: '#result',
+      heading: 'この献立、作らずに届けてもらう？🛒',
+      items: [
+        { id:'oisix',    label:'Oisix お試しセット（半額級）', desc:'必要な食材が人数分。下ごしらえ済みで時短。', url:'https://example.com/oisix?afid=DEMO', badge:'人気' },
+        { id:'yoshikei', label:'ヨシケイ ミールキット',         desc:'レシピ付きで毎日の献立に悩まない。',         url:'https://example.com/yoshikei?afid=DEMO' },
+        { id:'furusato', label:'ふるさと納税でお米・お肉',       desc:'実質2,000円で返礼品。食費の節約に。',         url:'https://example.com/furusato?afid=DEMO', badge:'節約' }
+      ]
+    });
+
+    // 無料の簡易クリック計測の確認用表示（運用では消してOK）
+    document.getElementById('clicks').textContent =
+      'クリック計測(localStorage): ' + JSON.stringify(AffKit.getClicks());
+  </script>
+</body>
+</html>
