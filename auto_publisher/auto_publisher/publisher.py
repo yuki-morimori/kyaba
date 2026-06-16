@@ -30,17 +30,33 @@ def _sleep(cfg: Config) -> None:
     time.sleep(random.uniform(cfg.safety.min_delay_sec, cfg.safety.max_delay_sec))
 
 
+def _locator(page: Any, action: FieldAction):
+    """by に応じて要素を特定する（CSS/ラベル/プレースホルダ/表示文言）。"""
+    by = (action.by or "css").lower()
+    sel = action.selector
+    if by == "css":
+        return page.locator(sel)
+    if by == "label":
+        return page.get_by_label(sel)
+    if by == "placeholder":
+        return page.get_by_placeholder(sel)
+    if by == "text":
+        return page.get_by_text(sel)
+    raise ValueError(f"未知の by: {action.by}")
+
+
 def _apply_field(page: Any, action: FieldAction, product: Product) -> None:
     """1項目をフォームに反映する。"""
     value = action.resolve(product)
+    loc = _locator(page, action)
     if action.action == "fill":
-        page.fill(action.selector, value)
+        loc.fill(value)
     elif action.action == "select":
-        page.select_option(action.selector, label=value)
+        loc.select_option(label=value)
     elif action.action == "upload":
-        page.set_input_files(action.selector, value)
+        loc.set_input_files(value)
     elif action.action == "click":
-        page.click(action.selector)
+        loc.click()
     else:
         raise ValueError(f"未知のaction: {action.action}")
 
@@ -79,7 +95,8 @@ def run(cfg: Config, products: list[Product]) -> list[PublishResult]:
     print(f"[{cfg.platform}] {mode} / {len(queue)}件を処理"
           f"（上限{cfg.safety.max_per_run}・超過{len(skipped)}件は次回）")
 
-    with launch_context(cfg.safety.user_data_dir, cfg.safety.headed) as context:
+    with launch_context(cfg.safety.user_data_dir, cfg.safety.headed,
+                        cfg.safety.browser_channel) as context:
         page = context.pages[0] if context.pages else context.new_page()
 
         # 初回はログインが必要。ログイン画面を開いて人の操作を待つ。

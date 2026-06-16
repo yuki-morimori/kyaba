@@ -1,0 +1,40 @@
+# ============================================================
+#  BOOTH 用の設定テンプレ
+#  使い方: このファイルを config.yaml にコピーして使う。
+#
+#  BOOTHは自分のショップに自分のデジタル商品を並べる場なので、
+#  自動化の規約リスクは低め。ただし「自分の出品にのみ・常識的な頻度で」。
+#  （pixiv/BOOTHは過度な自動アクセス・スクレイピングを禁止しています）
+#
+#  ※ BOOTHのフォームは画面が変わることがあります。下の selector（ラベル名）が
+#    合わない場合は、実際の入力欄の表示名に合わせて書き換えてください。
+#    by: label は「画面に見えているラベル文字」で要素を探すので、CSSより壊れにくい。
+# ============================================================
+
+platform: "BOOTH"
+
+login_url: "https://accounts.booth.pm/users/sign_in"
+listing_url: "https://manage.booth.pm/items/new"
+
+safety:
+  dry_run: true
+  headed: true
+  max_per_run: 5          # BOOTHは少なめ推奨
+  min_delay_sec: 5
+  max_delay_sec: 12
+  user_data_dir: ".browser_profile_booth"
+  browser_channel: "chrome"   # PCのChromeを使う
+
+# フォーム項目（ラベル名で指定＝壊れにくい）。
+# 実際のBOOTHの表示名に合わせて selector を調整してください。
+fields:
+  - {action: fill, by: label, selector: "商品名",   source: title}
+  - {action: fill, by: label, selector: "説明",     source: description}
+  - {action: fill, by: label, selector: "価格",     source: price}
+  # ダウンロード商品ファイルのアップロード（input[type=file] をCSSで指定）
+  - {action: upload, by: css, selector: "input[type=file]", source: file_path}
+
+# 出品（公開/保存）ボタン。実際のボタン文言に合わせて調整。
+# 文言で押したいときは submit を fields 側に click/by:text で書く方法もある。
+submit_selector: "button[type=submit]"
+success_selector: null      # 成功判定が分かれば設定（例: ".item-edit-complete"）

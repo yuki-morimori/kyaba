@@ -47,11 +47,17 @@ def load_products(path: str | Path) -> list[Product]:
 
 @dataclass
 class FieldAction:
-    """フォーム1項目の操作定義。"""
+    """フォーム1項目の操作定義。
+
+    by: 要素の探し方。css(既定) / label / placeholder / text。
+        BOOTH等の動的フォームは class が毎回変わるので、label や placeholder
+        （画面に見えている文言）で指定すると壊れにくい。
+    """
     action: str            # fill / select / upload / click
-    selector: str
+    selector: str          # by に応じて CSSセレクタ or 表示文言
     source: str | None = None   # products.csv の列名
     literal: str | None = None  # 固定値
+    by: str = "css"        # css / label / placeholder / text
 
     def resolve(self, product: Product) -> str:
         """この操作で入力する値を決める（literal優先、なければsource）。"""
@@ -70,6 +76,9 @@ class Safety:
     min_delay_sec: float = 4.0
     max_delay_sec: float = 9.0
     user_data_dir: str = ".browser_profile"
+    # "chrome"=PCにインストール済みのChromeを使う（chromiumの追加DL不要・推奨）。
+    # ""=Playwright同梱のchromiumを使う（要 playwright install chromium）。
+    browser_channel: str = "chrome"
 
 
 @dataclass

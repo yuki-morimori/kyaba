@@ -34,7 +34,7 @@ def show_plan(cfg: Config, products) -> None:
     for i, p in enumerate(products[: cfg.safety.max_per_run], 1):
         print(f"\n#{i} {p.title}  (¥{p.price})")
         for a in cfg.fields:
-            print(f"    {a.action:7s} {a.selector}  ← {a.resolve(p)!r}")
+            print(f"    {a.action:7s} [{a.by}] {a.selector}  ← {a.resolve(p)!r}")
     print(f"\n送信ボタン: {cfg.submit_selector}  "
           f"/ dry_run={cfg.safety.dry_run}")
 
