@@ -1,0 +1,43 @@
+# ============================================================
+#  自動出品ツール 設定ファイル（出品先ごとに差し替える）
+#
+#  使い方:
+#   1) このファイルを config.yaml にコピー
+#   2) 出品先（自分のショップ）のURLと、フォーム項目のCSSセレクタを埋める
+#   3) セレクタはブラウザの「検証(F12)」で対象の入力欄を右クリック→Copy selector
+#
+#  ※ 特定サイトのセレクタは時々変わります。動かなくなったら見直してください。
+#  ※ 出品先の利用規約を必ず確認し、自分のショップ・自分の商品にのみ使うこと。
+# ============================================================
+
+platform: "サンプルショップ"          # 出品先の名前（ログ用）
+
+# --- URL ---
+login_url: "https://example.com/login"        # ログイン画面（手動ログインに使う）
+listing_url: "https://example.com/items/new"   # 新規出品フォームのURL
+
+# --- 安全装置 ---
+safety:
+  dry_run: true          # true=確認モード（入力するが「出品」ボタンは押さない）
+  headed: true           # true=ブラウザを表示して人が監視（推奨）
+  max_per_run: 10        # 1回の実行で出品する最大件数（連続大量出品を防ぐ）
+  min_delay_sec: 4       # 各操作の最小待機（人間らしく・検知回避）
+  max_delay_sec: 9       # 各操作の最大待機
+  # ログイン済みセッションを保存するフォルダ（認証情報は平文保存しない）
+  user_data_dir: ".browser_profile"
+
+# --- フォーム項目のマッピング ---
+# action: fill(文字入力) / select(プルダウン) / upload(ファイル) / click(チェック等)
+# source: products.csv の列名（title/price/description/file_path/tags）。literal で固定値も可。
+fields:
+  - {action: fill,   selector: "#item-name",        source: title}
+  - {action: fill,   selector: "#item-price",       source: price}
+  - {action: fill,   selector: "#item-description", source: description}
+  - {action: upload, selector: "input[type=file]",  source: file_path}
+  # 固定値を入れたい例（カテゴリ等）:
+  # - {action: select, selector: "#category", literal: "デジタルコンテンツ"}
+
+# 出品を確定するボタン
+submit_selector: "#submit-listing"
+# 出品成功を判定する要素（これが出たら成功とみなす）。未設定なら送信後に待機のみ。
+success_selector: ".listing-complete"
