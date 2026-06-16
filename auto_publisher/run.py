@@ -32,7 +32,8 @@ def show_plan(cfg: Config, products) -> None:
     """ブラウザを起動せず、各商品で何をどの欄に入れるか表示（安全な下見）。"""
     print(f"[{cfg.platform}] 出品プラン（ブラウザ未起動）")
     for i, p in enumerate(products[: cfg.safety.max_per_run], 1):
-        print(f"\n#{i} {p.title}  (¥{p.price})")
+        price = f"  (¥{p.price})" if p.price else ""
+        print(f"\n#{i} {p.label}{price}")
         for a in cfg.fields:
             print(f"    {a.action:7s} [{a.by}] {a.selector}  ← {a.resolve(p)!r}")
     print(f"\n送信ボタン: {cfg.submit_selector}  "

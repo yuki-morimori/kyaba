@@ -10,30 +10,49 @@ from typing import Any
 
 @dataclass
 class Product:
-    """出品する1商品。products.csv の1行に対応。"""
-    title: str
-    price: str
+    """入力1件（CSVの1行）。出品なら1商品、フォーム記入なら1件分のデータ。
+
+    出品でよく使う列（title/price等）は名前付きで持つが、すべて任意。
+    出品以外（申込・登録フォーム等）の任意の列は extra に入る。
+    """
+    title: str = ""
+    price: str = ""
     description: str = ""
     file_path: str = ""
     tags: str = ""
     extra: dict[str, str] = field(default_factory=dict)
 
     def value_for(self, source: str) -> str:
-        """フィールド設定の source 名から値を取り出す。"""
-        if hasattr(self, source):
+        """フィールド設定の source 名から値を取り出す（名前付き列→extra の順）。"""
+        if source in {"title", "price", "description", "file_path", "tags"}:
             return str(getattr(self, source))
         return self.extra.get(source, "")
 
+    @property
+    def label(self) -> str:
+        """ログ表示用の名前。title が無ければ最初の値を使う。"""
+        if self.title:
+            return self.title
+        for v in self.extra.values():
+            if v:
+                return v
+        return "(無題)"
+
 
 def load_products(path: str | Path) -> list[Product]:
-    """CSVを読み、Productのリストにする。未知の列は extra に入れる。"""
+    """CSVを読み、Productのリストにする。未知の列は extra に入れる。
+
+    出品用にも、汎用フォーム入力用にも使える（title が無くてもOK）。
+    すべての値が空の行だけスキップする。
+    """
     known = {"title", "price", "description", "file_path", "tags"}
     products: list[Product] = []
     with Path(path).open(encoding="utf-8") as f:
         for row in csv.DictReader(f):
-            if not (row.get("title") or "").strip():
-                continue
-            extra = {k: v for k, v in row.items() if k not in known and k}
+            if not any((v or "").strip() for v in row.values()):
+                continue  # 完全に空の行のみスキップ
+            extra = {k: (v or "").strip() for k, v in row.items()
+                     if k and k not in known}
             products.append(Product(
                 title=(row.get("title") or "").strip(),
                 price=(row.get("price") or "").strip(),

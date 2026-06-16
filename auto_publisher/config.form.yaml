@@ -1,0 +1,37 @@
+# ============================================================
+#  汎用「Webフォーム自動記入」用テンプレ
+#  出品に限らず、申込・登録・応募・問い合わせフォームなどに、
+#  CSVの各行を1件として自動入力する。
+#
+#  使い方: config.yaml にコピー → URLとフィールドを対象フォームに合わせる。
+#  入力データは任意の列名でOK（例: examples/form_data.csv）。
+#  fields の source に、CSVの列名をそのまま書ける。
+# ============================================================
+
+platform: "汎用Webフォーム"
+
+# ログイン不要なフォームなら、login_url も同じURLにしておけばOK
+login_url: "https://example.com/contact"
+listing_url: "https://example.com/contact"
+
+safety:
+  dry_run: true
+  headed: true
+  max_per_run: 10
+  min_delay_sec: 3
+  max_delay_sec: 8
+  user_data_dir: ".browser_profile_form"
+  browser_channel: "chrome"
+
+# ラベル名（画面に見える文字）で指定＝フォームが変わっても壊れにくい。
+# source はCSVの列名。下は examples/form_data.csv の列に対応。
+fields:
+  - {action: fill, by: label, selector: "お名前",          source: name}
+  - {action: fill, by: label, selector: "メールアドレス",    source: email}
+  - {action: fill, by: label, selector: "電話番号",         source: tel}
+  - {action: fill, by: label, selector: "お問い合わせ内容",  source: message}
+  # チェックボックス等を入れる例（同意など）:
+  # - {action: click, by: label, selector: "利用規約に同意する"}
+
+submit_selector: "button[type=submit]"
+success_selector: null      # 送信完了の判定要素が分かれば指定（例: ".thanks"）

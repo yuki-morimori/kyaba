@@ -71,16 +71,16 @@ def publish_one(page: Any, cfg: Config, product: Product) -> PublishResult:
             _sleep(cfg)
 
         if cfg.safety.dry_run:
-            return PublishResult(product.title, "dry_run",
-                                 "入力のみ（出品ボタンは押していません）")
+            return PublishResult(product.label, "dry_run",
+                                 "入力のみ（送信ボタンは押していません）")
 
         page.click(cfg.submit_selector)
         if cfg.success_selector:
             page.wait_for_selector(cfg.success_selector, timeout=30000)
         _sleep(cfg)
-        return PublishResult(product.title, "published", "出品完了")
+        return PublishResult(product.label, "published", "送信完了")
     except Exception as e:  # 1件失敗しても止めない
-        return PublishResult(product.title, "error", f"{type(e).__name__}: {e}")
+        return PublishResult(product.label, "error", f"{type(e).__name__}: {e}")
 
 
 def run(cfg: Config, products: list[Product]) -> list[PublishResult]:
