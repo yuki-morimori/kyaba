@@ -1,5 +1,6 @@
-.browser_profile/
+.browser_profile*/
 config.yaml
 __pycache__/
 *.pyc
 assets/
+packaging/build/
