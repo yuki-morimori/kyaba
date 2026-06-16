@@ -2,11 +2,18 @@
 REM === 自動出品ツール 起動メニュー（Windows）===
 cd /d "%~dp0"
 
+REM config.yaml が無ければ BOOTH用テンプレから自動で作る
 if not exist config.yaml (
-  echo config.yaml がありません。config.example.yaml または config.booth.yaml を
-  echo config.yaml という名前でコピーして、出品先に合わせて編集してください。
-  pause
-  exit /b 1
+  if exist config.booth.yaml (
+    copy config.booth.yaml config.yaml >nul
+    echo BOOTH用の設定ファイル config.yaml を作成しました。
+    echo あとで出品先に合わせて config.yaml を編集できます。
+    echo.
+  ) else (
+    echo config.yaml も config.booth.yaml も見つかりません。
+    pause
+    exit /b 1
+  )
 )
 
 echo どれを実行しますか？
