@@ -1,20 +1,19 @@
 @echo off
-chcp 65001 >nul
-REM === è‡ªå‹•å‡ºå“ãƒ„ãƒ¼ãƒ« èµ·å‹•ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼ˆWindowsï¼‰===
+REM === Ž©“®o•iƒc[ƒ‹ ‹N“®ƒƒjƒ…[iWindowsj===
 cd /d "%~dp0"
 
 if not exist config.yaml (
-  echo config.yaml ãŒã‚ã‚Šã¾ã›ã‚“ã€‚config.example.yaml ã¾ãŸã¯ config.booth.yaml ã‚’
-  echo config.yaml ã¨ã„ã†åå‰ã§ã‚³ãƒ”ãƒ¼ã—ã¦ã€å‡ºå“å…ˆã«åˆã‚ã›ã¦ç·¨é›†ã—ã¦ãã ã•ã„ã€‚
+  echo config.yaml ‚ª‚ ‚è‚Ü‚¹‚ñBconfig.example.yaml ‚Ü‚½‚Í config.booth.yaml ‚ð
+  echo config.yaml ‚Æ‚¢‚¤–¼‘O‚ÅƒRƒs[‚µ‚ÄAo•iæ‚É‡‚í‚¹‚Ä•ÒW‚µ‚Ä‚­‚¾‚³‚¢B
   pause
   exit /b 1
 )
 
-echo ã©ã‚Œã‚’å®Ÿè¡Œã—ã¾ã™ã‹ï¼Ÿ
-echo   1) ä¸‹è¦‹ï¼ˆãƒ–ãƒ©ã‚¦ã‚¶ã‚’é–‹ã‹ãšå…¥åŠ›å†…å®¹ã ã‘è¡¨ç¤ºï¼‰
-echo   2) ç¢ºèªãƒ¢ãƒ¼ãƒ‰ï¼ˆå…¥åŠ›ã™ã‚‹ãŒå‡ºå“ã—ãªã„ï¼‰
-echo   3) æœ¬ç•ªå‡ºå“
-set /p mode="ç•ªå·ã‚’å…¥åŠ›ã—ã¦Enter: "
+echo ‚Ç‚ê‚ðŽÀs‚µ‚Ü‚·‚©H
+echo   1) ‰ºŒ©iƒuƒ‰ƒEƒU‚ðŠJ‚©‚¸“ü—Í“à—e‚¾‚¯•\Ž¦j
+echo   2) Šm”Fƒ‚[ƒhi“ü—Í‚·‚é‚ªo•i‚µ‚È‚¢j
+echo   3) –{”Ôo•i
+set /p mode="”Ô†‚ð“ü—Í‚µ‚ÄEnter: "
 
 if "%mode%"=="1" python run.py --plan
 if "%mode%"=="2" python run.py

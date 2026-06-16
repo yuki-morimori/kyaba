@@ -1,23 +1,22 @@
 @echo off
-chcp 65001 >nul
-REM === è‡ªå‹•å‡ºå“ãƒ„ãƒ¼ãƒ« åˆå›žã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ï¼ˆWindowsï¼‰===
-REM ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨å¿…è¦ãªæº–å‚™ã‚’è‡ªå‹•ã§è¡Œã„ã¾ã™ã€‚
+REM === Ž©“®o•iƒc[ƒ‹ ‰‰ñƒZƒbƒgƒAƒbƒviWindowsj===
+REM ‚±‚Ìƒtƒ@ƒCƒ‹‚ðƒ_ƒuƒ‹ƒNƒŠƒbƒN‚·‚é‚Æ•K—v‚È€”õ‚ðŽ©“®‚Ås‚¢‚Ü‚·B
 cd /d "%~dp0"
 
-echo [1/2] å¿…è¦ãªãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™...
+echo [1/2] •K—v‚Èƒ‰ƒCƒuƒ‰ƒŠ‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·...
 python -m pip install -r requirements.txt
 if errorlevel 1 (
   echo.
-  echo Python ãŒè¦‹ã¤ã‹ã‚‰ãªã„ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚
-  echo https://www.python.org/downloads/ ã‹ã‚‰ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã€
-  echo ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç”»é¢ã§ã€ŒAdd Python to PATHã€ã«ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„ã€‚
+  echo Python ‚ªŒ©‚Â‚©‚ç‚È‚¢‚©‚à‚µ‚ê‚Ü‚¹‚ñB
+  echo https://www.python.org/downloads/ ‚©‚çƒCƒ“ƒXƒg[ƒ‹‚µA
+  echo ƒCƒ“ƒXƒg[ƒ‹‰æ–Ê‚ÅuAdd Python to PATHv‚Éƒ`ƒFƒbƒN‚ð“ü‚ê‚Ä‚­‚¾‚³‚¢B
   pause
   exit /b 1
 )
 
-echo [2/2] ãƒ–ãƒ©ã‚¦ã‚¶æº–å‚™ï¼ˆChromeåˆ©ç”¨ã®ãŸã‚é€šå¸¸ã¯ã‚¹ã‚­ãƒƒãƒ—å¯ï¼‰...
+echo [2/2] ƒuƒ‰ƒEƒU€”õiChrome—˜—p‚Ì‚½‚ß’Êí‚ÍƒXƒLƒbƒv‰Âj...
 python -m playwright install chromium
 
 echo.
-echo ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—å®Œäº†ï¼ start.bat ã‚’ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã—ã¦ä½¿ã„å§‹ã‚ã‚‰ã‚Œã¾ã™ã€‚
+echo ƒZƒbƒgƒAƒbƒvŠ®—¹I start.bat ‚ðƒ_ƒuƒ‹ƒNƒŠƒbƒN‚µ‚ÄŽg‚¢Žn‚ß‚ç‚ê‚Ü‚·B
 pause

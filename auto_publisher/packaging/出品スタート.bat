@@ -1,37 +1,36 @@
 @echo off
-chcp 65001 >nul
 REM ============================================================
-REM  è‡ªå‹•å‡ºå“ãƒ„ãƒ¼ãƒ«ï¼ˆè²·ã„æ‰‹ã¯ã“ã‚Œã‚’ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã ã‘ï¼‰
-REM  Pythonã¯åŒæ¢±ã—ã¦ã„ã‚‹ã®ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ä¸è¦ã§ã™ã€‚
+REM  Ž©“®o•iƒc[ƒ‹i”ƒ‚¢Žè‚Í‚±‚ê‚ðƒ_ƒuƒ‹ƒNƒŠƒbƒN‚·‚é‚¾‚¯j
+REM  Python‚Í“¯«‚µ‚Ä‚¢‚é‚Ì‚ÅƒCƒ“ƒXƒg[ƒ‹•s—v‚Å‚·B
 REM ============================================================
 cd /d "%~dp0"
 
 set PY=python\python.exe
 
-REM Chromiumã‚’åŒæ¢±ã—ã¦ã„ã‚‹å ´åˆã¯ãã®ãƒ‘ã‚¹ã‚’ä½¿ã†ï¼ˆç„¡ã‘ã‚Œã°PCã®Chromeã‚’ä½¿ç”¨ï¼‰
+REM Chromium‚ð“¯«‚µ‚Ä‚¢‚éê‡‚Í‚»‚ÌƒpƒX‚ðŽg‚¤i–³‚¯‚ê‚ÎPC‚ÌChrome‚ðŽg—pj
 if exist "ms-playwright" set PLAYWRIGHT_BROWSERS_PATH=%~dp0ms-playwright
 
 if not exist "%PY%" (
-  echo åŒæ¢±ã®PythonãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚ãƒ•ã‚©ãƒ«ãƒ€ã‚’è§£å‡ã—ç›´ã—ã¦ãã ã•ã„ã€‚
+  echo “¯«‚ÌPython‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñBƒtƒHƒ‹ƒ_‚ð‰ð“€‚µ’¼‚µ‚Ä‚­‚¾‚³‚¢B
   pause & exit /b 1
 )
 
-if not exist "è¨­å®š.yaml" (
-  echo ã€Œè¨­å®š.yamlã€ãŒã‚ã‚Šã¾ã›ã‚“ã€‚ä»˜å±žã®èª¬æ˜Žæ›¸ã‚’ã”ç¢ºèªãã ã•ã„ã€‚
+if not exist "Ý’è.yaml" (
+  echo uÝ’è.yamlv‚ª‚ ‚è‚Ü‚¹‚ñB•t‘®‚Ìà–¾‘‚ð‚²Šm”F‚­‚¾‚³‚¢B
   pause & exit /b 1
 )
 
 echo ============================================
-echo   è‡ªå‹•å‡ºå“ãƒ„ãƒ¼ãƒ«
+echo   Ž©“®o•iƒc[ƒ‹
 echo ============================================
-echo   1) ä¸‹è¦‹    ï¼ˆãƒ–ãƒ©ã‚¦ã‚¶ã‚’é–‹ã‹ãšã€å…¥åŠ›å†…å®¹ã ã‘ç¢ºèªï¼‰
-echo   2) ç¢ºèª    ï¼ˆå…¥åŠ›ã™ã‚‹ãŒå‡ºå“ã¯ã—ãªã„ï¼‰
-echo   3) æœ¬ç•ªå‡ºå“ï¼ˆå®Ÿéš›ã«å‡ºå“ã™ã‚‹ï¼‰
+echo   1) ‰ºŒ©    iƒuƒ‰ƒEƒU‚ðŠJ‚©‚¸A“ü—Í“à—e‚¾‚¯Šm”Fj
+echo   2) Šm”F    i“ü—Í‚·‚é‚ªo•i‚Í‚µ‚È‚¢j
+echo   3) –{”Ôo•iiŽÀÛ‚Éo•i‚·‚éj
 echo.
-set /p mode="ç•ªå·ã‚’å…¥åŠ›ã—ã¦Enter: "
+set /p mode="”Ô†‚ð“ü—Í‚µ‚ÄEnter: "
 
-if "%mode%"=="1" "%PY%" app\run.py --plan  --config è¨­å®š.yaml --products å•†å“ãƒªã‚¹ãƒˆ.csv
-if "%mode%"=="2" "%PY%" app\run.py         --config è¨­å®š.yaml --products å•†å“ãƒªã‚¹ãƒˆ.csv
-if "%mode%"=="3" "%PY%" app\run.py --live   --config è¨­å®š.yaml --products å•†å“ãƒªã‚¹ãƒˆ.csv
+if "%mode%"=="1" "%PY%" app\run.py --plan  --config Ý’è.yaml --products ¤•iƒŠƒXƒg.csv
+if "%mode%"=="2" "%PY%" app\run.py         --config Ý’è.yaml --products ¤•iƒŠƒXƒg.csv
+if "%mode%"=="3" "%PY%" app\run.py --live   --config Ý’è.yaml --products ¤•iƒŠƒXƒg.csv
 echo.
 pause

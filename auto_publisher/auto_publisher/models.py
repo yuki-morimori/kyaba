@@ -47,7 +47,8 @@ def load_products(path: str | Path) -> list[Product]:
     """
     known = {"title", "price", "description", "file_path", "tags"}
     products: list[Product] = []
-    with Path(path).open(encoding="utf-8") as f:
+    # utf-8-sig: ExcelがCSVを保存するときに付くBOMも正しく読み飛ばす
+    with Path(path).open(encoding="utf-8-sig") as f:
         for row in csv.DictReader(f):
             if not any((v or "").strip() for v in row.values()):
                 continue  # 完全に空の行のみスキップ
