@@ -24,7 +24,14 @@ def launch_context(user_data_dir: str, headed: bool = True, channel: str = "chro
     from playwright.sync_api import sync_playwright  # 遅延import
 
     Path(user_data_dir).mkdir(parents=True, exist_ok=True)
-    launch_kwargs: dict = {"user_data_dir": user_data_dir, "headless": not headed}
+    launch_kwargs: dict = {
+        "user_data_dir": user_data_dir,
+        "headless": not headed,
+        # 「自動化されたブラウザ」という痕跡を減らす。
+        # ログイン時のreCAPTCHA等のボット判定を通りやすくするため（手動ログイン前提）。
+        "ignore_default_args": ["--enable-automation"],
+        "args": ["--disable-blink-features=AutomationControlled"],
+    }
     if channel:
         launch_kwargs["channel"] = channel
 
